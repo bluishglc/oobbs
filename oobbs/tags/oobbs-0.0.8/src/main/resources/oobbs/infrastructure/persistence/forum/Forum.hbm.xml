@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 30, 2010 5:17:42 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <subclass name="oobbs.domainmodel.forum.Forum" extends="oobbs.domainmodel.forum.ForumNode" discriminator-value="Forum" lazy="false">
+        <property name="id" type="java.lang.Long">
+            <column name="ID" />
+        </property>
+        <property name="logger" type="org.apache.log4j.Logger">
+            <column name="LOGGER" />
+        </property>
+        <property name="serialVersionUID" type="long">
+            <column name="SERIALVERSIONUID" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="DESCRIPTION" />
+        </property>
+        <set name="moderators" table="USER" inverse="false" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <one-to-many class="oobbs.domainmodel.user.User" />
+        </set>
+        <property name="forumThreads" type="oobbs.domainmodel.Collection">
+            <column name="FORUMTHREADS" />
+        </property>
+        <property name="forumPosts" type="oobbs.domainmodel.Collection">
+            <column name="FORUMPOSTS" />
+        </property>
+        <many-to-one name="group" class="oobbs.domainmodel.forum.ForumGroup" fetch="join">
+            <column name="GROUP" />
+        </many-to-one>
+        <property name="creationTime" type="java.util.Date">
+            <column name="CREATIONTIME" />
+        </property>
+        <property name="modifiedTime" type="java.util.Date">
+            <column name="MODIFIEDTIME" />
+        </property>
+    </subclass>
+</hibernate-mapping>

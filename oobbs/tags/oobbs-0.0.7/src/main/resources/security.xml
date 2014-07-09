@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd
+              					 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <http auto-config="true" lowercase-comparisons="false">
+        <!--intercept-url pattern="/images/*" filters="none"/>
+        <intercept-url pattern="/styles/*" filters="none"/>
+        <intercept-url pattern="/scripts/*" filters="none"/-->
+        <intercept-url pattern="/site/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/admin/*" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/**" access="ROLE_USER"/>
+        <!--
+        <intercept-url pattern="/passwordHint.html*" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/signup.html*" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/a4j.res/*.html*" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/**/*.action*" access="ROLE_ADMIN,ROLE_USER"/> 
+        -->
+        <!-- 
+        	1.Absolute path is requied by spring security! 
+        	2.authentication-failure-url & default-target-url are both client redirect not server redirect!
+        -->
+        <form-login login-page="/site/login.jsp" authentication-failure-url="/403.jsp" always-use-default-target="false" default-target-url="/site/getAllForumGroups.action" login-processing-url="/j_spring_security_check"/>
+        <!--remember-me user-service-ref="userAuthenticationService" key="e37f4b31-0c45-11dd-bd0b-0800200c9a66"/-->
+    </http>
+    
+	<authentication-manager>
+		<authentication-provider user-service-ref="userAuthenticationService">
+			<password-encoder  ref="passwordEncoder"/>
+		</authentication-provider>
+	    <!--authentication-provider>
+	      <user-service>
+	        <user name="user" password="user" authorities="ROLE_USER" />
+	        <user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
+	      </user-service>
+	    </authentication-provider-->
+
+	</authentication-manager>
+
+    <!-- Security class from Spring Security - used to configure Password.Encryption in UserServiceImpl. -->
+    <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+
+    <global-method-security>
+        <protect-pointcut expression="execution(* *..service.UserManager.getUsers(..))" access="ROLE_ADMIN"/>
+        <protect-pointcut expression="execution(* *..service.UserManager.removeUser(..))" access="ROLE_ADMIN"/>
+    </global-method-security>
+</beans:beans>

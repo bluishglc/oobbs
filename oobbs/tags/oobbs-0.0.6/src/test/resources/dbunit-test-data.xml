@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <table name="User">
+        <column>id</column>
+        <column>username</column>
+        <column>password</column>
+        <column>email</column>
+        <column>version</column>
+        <column>enabled</column>
+        <column>accountNonExpired</column>
+        <column>accountNonLocked</column>
+        <column>credentialsNonExpired</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="username">user</value>
+            <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
+            <value description="email">matt_raible@yahoo.com</value>
+            <value description="version">1</value>
+            <value description="enabled">1</value>
+            <value description="accountNonExpired">1</value>
+            <value description="accountNonLocked">1</value>
+            <value description="credentialsNonExpired">1</value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="username">admin</value>
+            <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
+            <value description="email">matt@raibledesigns.com</value>
+            <value description="version">1</value>
+            <value description="enabled">1</value>
+            <value description="accountNonExpired">1</value>
+            <value description="accountNonLocked">1</value>
+            <value description="credentialsNonExpired">1</value>
+        </row>
+    </table>
+    <table name="Role">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="name">ROLE_ADMIN</value>
+            <value description="description"><![CDATA[Administrator role (can edit Users)]]></value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="name">ROLE_USER</value>
+            <value description="description"><![CDATA[Default role for all Users]]></value>
+        </row>
+    </table>
+    
+    <table name="ForumGroup">
+        <column>id</column>
+    	<column>name</column>
+    	<column>description</column>
+    	<column>creationTime</column>
+    	<column>modifiedTime</column>
+    	<row>
+            <value description="id">1</value>
+			<value description="name">Group_1</value>
+			<value description="description">This is Group_1!</value>
+			<value description="creationTime">2009-11-11 11:11:11</value>
+			<value description="modifiedTime">2009-11-12 11:11:11</value>
+        </row>
+    	<row>
+            <value description="id">2</value>
+			<value description="name">Group_2</value>
+			<value description="description">This is Group_2!</value>
+			<value description="creationTime">2009-11-13 11:11:11</value>
+			<value description="modifiedTime">2009-11-14 11:11:11</value>
+        </row>
+    </table>
+    
+    <table name="Forum">
+        <column>id</column>
+    	<column>name</column>
+    	<column>description</column>
+    	<column>groupId</column>
+    	<column>creationTime</column>
+    	<column>modifiedTime</column>
+    	<row>
+            <value description="id">1</value>
+			<value description="name">Forum_1</value>
+			<value description="description">This is Forum_1.</value>
+			<value description="groupId">1</value>
+			<value description="creationTime">2009-11-15 11:11:11</value>
+			<value description="modifiedTime">2009-11-16 11:11:11</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+			<value description="name">Forum_2</value>
+			<value description="description">This is Forum_2.</value>
+			<value description="groupId">1</value>
+			<value description="creationTime">2009-11-17 11:11:11</value>
+			<value description="modifiedTime">2009-11-18 11:11:11</value>
+        </row>
+    </table>   
+    
+     <table name="Thread">
+        <column>id</column>
+    	<column>subjectId</column>
+    	<column>forumId</column>
+    	<column>creationTime</column>
+    	<column>modifiedTime</column>
+    	<row>
+            <value description="id">1</value>
+			<value description="subjectId">1</value>
+			<value description="forumId">1</value>
+			<value description="creationTime">2009-11-29 11:11:11</value>
+			<value description="modifiedTime">2009-11-29 11:11:11</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+			<value description="subjectPostId">3</value>
+			<value description="forumId">1</value>
+			<value description="creationTime">2009-11-09 11:11:11</value>
+			<value description="modifiedTime">2009-11-09 11:11:11</value>
+        </row>
+    </table>
+    
+    <table name="Post">
+        <column>id</column>
+    	<column>title</column>
+    	<column>messageBody</column>
+    	<column>isSubject</column>
+    	<column>authorId</column>
+    	<column>quotedPostId</column>
+    	<column>threadId</column>
+    	<column>creationTime</column>
+    	<column>modifiedTime</column>
+    	<row>
+            <value description="id">1</value>
+			<value description="title">Subject_1</value>
+			<value description="messageBody">This is Subject_1.</value>
+			<value description="isSubject">true</value>
+			<value description="authorId">-1</value>
+			<null description="quotedPostId"></null>
+			<value description="threadId">1</value>
+			<value description="creationTime">2009-11-21 11:11:11</value>
+			<value description="modifiedTime">2009-11-22 11:11:11</value>
+        </row>
+        <row>
+            <value description="id">2</value>
+			<value description="title">Reply_1</value>
+			<value description="messageBody">This is Reply_1.</value>
+			<value description="isSubject">false</value>
+			<value description="authorId">-1</value>
+			<value description="quotedPostId">1</value>
+			<value description="threadId">1</value>
+			<value description="creationTime">2009-11-23 11:11:11</value>
+			<value description="modifiedTime">2009-11-24 11:11:11</value>
+        </row>
+        <row>
+            <value description="id">3</value>
+			<value description="title">Subject_2</value>
+			<value description="messageBody">This is Subject_2.</value>
+			<value description="isSubject">true</value>
+			<value description="authorId">-1</value>
+			<null description="quotedPostId"></null>
+			<value description="threadId">2</value>
+			<value description="creationTime">2009-11-25 11:11:11</value>
+			<value description="modifiedTime">2009-11-26 11:11:11</value>
+        </row>
+        <row>
+            <value description="id">4</value>
+			<value description="title">Reply_1</value>
+			<value description="messageBody">This is Reply_1.</value>
+			<value description="isSubject">false</value>
+			<value description="authorId">-1</value>
+			<value description="quotedPostId">3</value>
+			<value description="threadId">2</value>
+			<value description="creationTime">2009-11-27 11:11:11</value>
+			<value description="modifiedTime">2009-11-28 11:11:11</value>
+        </row>
+    </table>
+        
+    <table name="Subscriber_Thread">
+        <column>subscriberId</column>
+    	<column>threadId</column>
+    	<row>
+            <value description="subscriberId">-1</value>
+			<value description="threadId">1</value>
+        </row>
+    </table>
+    
+    <table name="Forum_Moderator">
+        <column>forumId</column>
+    	<column>moderatorId</column>
+    	<row>
+            <value description="forumId">1</value>
+			<value description="moderatorId">-1</value>
+        </row>
+    </table>
+
+    <table name="User_Role">
+        <column>userId</column>
+        <column>roleId</column>
+        <row>
+            <value description="userId">-1</value>
+            <value description="roleId">-2</value>
+        </row>
+        <row>
+            <value description="userId">-2</value>
+            <value description="roleId">-1</value>
+        </row>
+    </table>    
+	<!--  
+    <table name="">
+        <column>id</column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<column></column>
+    	<row>
+            <value description="id"></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+			<value description=""></value>
+        </row>
+    </table>
+    -->
+</dataset>

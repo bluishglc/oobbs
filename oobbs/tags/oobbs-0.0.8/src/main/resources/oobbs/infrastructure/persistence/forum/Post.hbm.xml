@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 30, 2010 5:17:42 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="oobbs.domainmodel.forum.Post" table="POST">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="serialVersionUID" type="long">
+            <column name="SERIALVERSIONUID" />
+        </property>
+        <property name="title" type="java.lang.String">
+            <column name="TITLE" />
+        </property>
+        <property name="messageBody" type="java.lang.String">
+            <column name="MESSAGEBODY" />
+        </property>
+        <property name="isSubject" type="boolean">
+            <column name="ISSUBJECT" />
+        </property>
+        <many-to-one name="author" class="oobbs.domainmodel.user.User" fetch="join">
+            <column name="AUTHOR" />
+        </many-to-one>
+        <one-to-one name="quotedPost" class="oobbs.domainmodel.forum.Post"></one-to-one>
+        <many-to-one name="thread" class="oobbs.domainmodel.forum.Thread" fetch="join">
+            <column name="THREAD" />
+        </many-to-one>
+        <property name="creationTime" type="java.util.Date">
+            <column name="CREATIONTIME" />
+        </property>
+        <property name="modifiedTime" type="java.util.Date">
+            <column name="MODIFIEDTIME" />
+        </property>
+    </class>
+</hibernate-mapping>

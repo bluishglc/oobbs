@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p [%t] [%c{1}.%M(%L)] ── %m%n"/>
+        </layout>
+    </appender>
+
+	<appender name="FILE" class="org.apache.log4j.FileAppender">
+		<param name="File" value="log.log"/>
+		<param name="Append" value="false"/>
+		<param name="Threshold" value="DEBUG"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p [%t] [%c{1}.%M(%L)] ── %m%n"/>
+		</layout>
+	</appender>
+	
+	<appender name="SESSION_TRANSACTION" class="org.apache.log4j.FileAppender">
+		<param name="File" value="session-transaction.log"/>
+		<param name="Append" value="false"/>
+		<param name="Threshold" value="DEBUG"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p [%t] [%c{1}.%M(%L)] ── %m%n"/>
+		</layout>
+	</appender>
+	
+	<appender name="CACHE" class="org.apache.log4j.FileAppender">
+		<param name="File" value="cache.log"/>
+		<param name="Append" value="false"/>
+		<param name="Threshold" value="DEBUG"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p [%t] [%c{1}.%M(%L)] ── %m%n"/>
+		</layout>
+	</appender>
+	
+	<!--  
+	<logger name="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<level value="DEBUG"/>
+		<appender-ref ref="SESSION_TRANSACTION"/>
+	</logger>
+	
+	<logger name="org.hibernate.transaction.JDBCTransaction">
+		<level value="DEBUG"/>
+		<appender-ref ref="SESSION_TRANSACTION"/>
+	</logger>
+	
+	<logger name="org.hibernate.impl.SessionImpl">
+		<level value="DEBUG"/>
+		<appender-ref ref="SESSION_TRANSACTION"/>
+	</logger>
+    
+    <logger name="org.hibernate.cache">
+        <level value="DEBUG"/>
+        <appender-ref ref="CACHE"/>
+    </logger>
+    
+    <logger name="net.sf.ehcache">
+        <level value="DEGUG"/>
+        <appender-ref ref="CACHE"/>
+    </logger>
+	-->
+	
+    <!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
+    <logger name="org.springframework.security">
+        <level value="ERROR"/>
+    </logger>
+
+    <!-- Suppress invalid warning messages from JSF -->
+    <logger name="org.apache.myfaces.shared_impl.renderkit.html">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="INFO"/>
+    </logger>
+  
+    <logger name="org.hibernate.SQL">
+        <level value="DEBUG"/>
+    </logger>
+   
+    <logger name="oobbs">
+        <level value="DEBUG"/>
+    </logger>
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</log4j:configuration>

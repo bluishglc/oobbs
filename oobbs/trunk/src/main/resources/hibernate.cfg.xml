@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN" 
+										 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+		
+		<!-- Properties ======================================================================================= -->
+		
+		<!-- Hibernate -->
+		
+		<!-- The SQL log prints by SQL logger. If this properties is true, each SQL will print twice.-->
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.use_sql_comments">true</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		
+		<!-- Cache -->
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<!--  
+		<property name="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</property>
+		-->
+		<!-- Deprecated ehccache setting, it's only for keeping compatibility for hibernate-tools plugin.--> 
+		<property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<property name="hibernate.generate_statistics">true</property>
+		<property name="hibernate.cache.use_structured_entries">true</property>
+		<property name="net.sf.ehcache.configurationResourceName">/ehcache.xml</property>		
+		
+		<!-- Etc -->		
+		<property name="hibernate.query.substitutions">true='Y',false='N'</property>
+		
+		    
+    	<!-- Mapping classes ================================================================================== -->
+    	
+    	<!-- User package -->
+    	<mapping class="oobbs.domainmodel.user.User"/>
+		<mapping class="oobbs.domainmodel.user.Role"/>
+		
+		<!-- Forum package -->
+		<mapping class="oobbs.domainmodel.forum.Forum"/>
+		<mapping class="oobbs.domainmodel.forum.ForumGroup"/>
+		<mapping class="oobbs.domainmodel.forum.Post"/>
+		<mapping class="oobbs.domainmodel.forum.Thread"/>		
+				
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 30, 2010 5:17:42 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="oobbs.domainmodel.forum">
+	<class name="Thread" table="thread">
+		<id name="id">
+			<generator class="native" />
+		</id>
+		<bag name="replies">
+			<key column="threadId"></key>
+			<one-to-many class="Post"/>
+		</bag>
+		<property name="creationTime" type="date"></property>
+		<property name="modifiedTime" type="date"></property>
+	</class>
+</hibernate-mapping>

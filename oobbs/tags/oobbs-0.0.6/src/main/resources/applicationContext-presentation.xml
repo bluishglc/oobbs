@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-lazy-init="true">
+	
+	<!-- Struts2 Interceptors ====================================================================================-->
+	
+    <bean id="adminInterceptor" class="oobbs.presentation.interceptor.UserRoleAuthorizationInterceptor">
+        <property name="authorizedRoles" value="ROLE_ADMIN"/>
+    </bean>
+    
+    <bean id="navigationGenerationInterceptor" class="oobbs.presentation.interceptor.NavigationGenerationInterceptor"></bean>
+    
+    <!-- Struts2 Actions =========================================================================================-->
+    
+    <bean id="signupAction" class="oobbs.presentation.action.user.SignupAction" scope="prototype">
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="templateName" value="accountCreated.vm"/>
+    </bean>
+    
+    <bean id="userAction" class="oobbs.presentation.action.user.UserAction" scope="prototype">
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="templateName" value="accountCreated.vm"/>
+    </bean>
+    
+    <bean id="passwordHintAction" class="oobbs.presentation.action.user.PasswordHintAction" scope="prototype">
+        <property name="userManager" ref="userManager"/>
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+    </bean>
+    
+    <bean id="forumGroupAction" class="oobbs.presentation.action.forum.ForumGroupAction">
+    	<property name="forumGroupService" ref="forumGroupService"/>
+    </bean>
+    
+    <bean id="forumAction" class="oobbs.presentation.action.forum.ForumAction">
+    	<property name="forumService" ref="forumService"/>
+    </bean>
+    
+    <bean id="threadAction" class="oobbs.presentation.action.forum.ThreadAction">
+    	<property name="forumService" ref="forumService"/>
+    	<property name="threadService" ref="threadService"/>
+    </bean>
+</beans>

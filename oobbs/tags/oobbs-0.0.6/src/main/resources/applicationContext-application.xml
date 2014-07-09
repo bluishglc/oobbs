@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            			   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+            			   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+       default-lazy-init="true">
+	<!--
+		Enable @Transactional support.
+     	NOTE:For tx:annotation-driven setting,
+     	It need a 'transaction-manager',however,you don't need
+		setting it manaully,because there's default value
+		"transactionManager" which we defined in infrastructure xml file!
+	-->
+    <tx:annotation-driven/>
+
+    <!-- Enable @Configured support -->
+    <context:spring-configured/>
+    
+       
+    <!-- AOP Configuration for Transaction =================================================================== -->
+    <aop:config>
+        <aop:advisor id="userManagerTxAdvisor" advice-ref="userManagerTxAdvice" pointcut="execution(* *..service.user.UserService.*(..))" order="0"/>   
+        <aop:advisor id="userManagerSecurityAdvisor" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.user.UserService.saveUser(..))" order="1"/>
+        <aop:advisor id="defaultTxAdvisor" advice-ref="defaultTxAdvice" pointcut="execution(* *..service.forum.*Service.*(..))" order="2"/>
+    </aop:config>
+    
+    <!-- Transaction Advice ================================================================================== -->
+    
+    <!--
+     	NOTE: For tx:advice	setting,
+		It need a 'transaction-manager',however,you don't need
+		setting it manaully,because there's default value
+		"transactionManager" which we defined in infrastructure xml file!
+    -->
+    <tx:advice id="defaultTxAdvice">
+        <tx:attributes>
+            <!-- Read-only commented out to make things easier for end-users -->
+            <!-- http://issues.appfuse.org/browse/APF-556 -->
+            <!--tx:method name="get*" read-only="true"/-->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <tx:advice id="userManagerTxAdvice">
+        <tx:attributes>
+            <tx:method name="save*" rollback-for="UserExistsException"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <bean id="userSecurityAdvice" class="oobbs.application.service.user.UserSecurityAdvice"/>
+    
+    <!-- Mail: Sender and Velocity configuration ============================================================ -->
+    
+    <bean id="mailEngine" class="oobbs.application.util.MailEngine">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="defaultEncoding" value="UTF-8"/> 
+        <!-- Uncomment if you need to authenticate with your SMTP Server -->
+        <!--property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="javaMailProperties">
+            <value>
+                mail.smtp.auth=true
+            </value>
+        </property-->
+    </bean>
+
+    <!-- Configure Velocity for sending e-mail -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+                <prop key="velocimacro.library"></prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+        <property name="from" value="${mail.default.from}"/>
+    </bean>
+    
+    <!-- Facades ============================================================================================= -->
+    
+    <bean id="forumGroupFacade" class="oobbs.application.facade.forum.ForumGroupFacadeImpl">
+    	<property name="forumGroupService" ref="forumGroupService"/>
+    </bean>
+    
+    <bean id="forumFacade" class="oobbs.application.facade.forum.ForumFacadeImpl">
+    	<property name="forumService" ref="forumService"/>
+    </bean>
+    
+    <!-- Assemblers ========================================================================================= -->
+    
+    <bean id="userAuthenticationAssembler" class="oobbs.application.dto.user.UserAuthenticationAssembler"/> 
+    
+    <bean id="forumGroupAssembler" class="oobbs.application.dto.forum.ForumGroupAssembler"/>
+    
+    <bean id="forumAssembler" class="oobbs.application.dto.forum.ForumAssembler"/>
+    
+    <bean id="threadAssembler" class="oobbs.application.dto.forum.ThreadAssembler">
+    	<property name="forumRepository" ref="forumRepository"/>
+    	<property name="userRepository" ref="userRepository"/>
+    	<property name="threadRepository" ref="threadRepository"/>
+    </bean>
+    
+    <bean id="postAssembler" class="oobbs.application.dto.forum.PostAssembler">
+    	<property name="forumRepository" ref="forumRepository"/>
+    	<property name="userRepository" ref="userRepository"/>
+    	<property name="threadRepository" ref="threadRepository"/>
+    </bean>
+    
+    <!-- <bean id="" class=""/> -->
+    
+    
+
+	<!-- Services ========================================================================================= -->
+    
+    <bean id="userAuthenticationService" class="oobbs.application.service.user.UserAuthenticationServiceImpl">
+		<property name="userRepository" ref="userRepository"/>
+		<property name="userAuthenticationAssembler" ref="userAuthenticationAssembler"/>
+	</bean>
+
+	<bean id="forumGroupService" class="oobbs.application.service.forum.ForumGroupServiceImpl">
+		<property name="forumGroupRepository" ref="forumGroupRepository"/>
+		<property name="forumGroupAssembler" ref="forumGroupAssembler"/>
+	</bean>
+	
+	<bean id="forumService" class="oobbs.application.service.forum.ForumServiceImpl">
+		<property name="forumRepository" ref="forumRepository"/>
+		<property name="forumAssembler" ref="forumAssembler"/>
+	</bean>
+	
+	<bean id="threadService" class="oobbs.application.service.forum.ThreadServiceImpl">
+		<property name="forumRepository" ref="forumRepository"/>
+		<property name="threadRepository" ref="threadRepository"/>
+		<property name="postRepository" ref="postRepository"/>
+		<property name="userRepository" ref="userRepository"/>
+		<property name="threadAssembler" ref="threadAssembler"/>
+	</bean>
+	
+    <!-- Add new Managers here -->
+</beans>

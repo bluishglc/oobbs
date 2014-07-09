@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 30, 2010 5:17:42 PM by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="oobbs.domainmodel.user.User" table="USER">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="serialVersionUID" type="long">
+            <column name="SERIALVERSIONUID" />
+        </property>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="confirmPassword" type="java.lang.String">
+            <column name="CONFIRMPASSWORD" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
+        </property>
+        <property name="version" type="java.lang.Integer">
+            <column name="VERSION" />
+        </property>
+        <set name="roles" table="ROLE" inverse="false" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <one-to-many class="oobbs.domainmodel.user.Role" />
+        </set>
+        <set name="subscribedThreads" table="THREAD" inverse="false" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <one-to-many class="oobbs.domainmodel.forum.Thread" />
+        </set>
+        <property name="enabled" type="boolean">
+            <column name="ENABLED" />
+        </property>
+        <property name="accountNonExpired" type="boolean">
+            <column name="ACCOUNTNONEXPIRED" />
+        </property>
+        <property name="accountNonLocked" type="boolean">
+            <column name="ACCOUNTNONLOCKED" />
+        </property>
+        <property name="credentialsNonExpired" type="boolean">
+            <column name="CREDENTIALSNONEXPIRED" />
+        </property>
+    </class>
+</hibernate-mapping>
